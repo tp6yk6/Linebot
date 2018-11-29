@@ -34,12 +34,12 @@ def function(text):
         text='hello'
     else:
         text='安安'
-    return TextSendMessage(text)
+    return text
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = function(event.message.text)
+    message = TextSendMessage(function(event.message.text))
     line_bot_api.reply_message(event.reply_token, message)
 
 import os
