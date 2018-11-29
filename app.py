@@ -29,18 +29,12 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-def function(text):
-    if text=='嗨':
-        text='87'
-    else:
-        text=text:
-    return TextSendMessage(text)
-    
+
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = function(event.message.text)
+    message = TextSendMessage(text='哈囉')
     line_bot_api.reply_message(event.reply_token, message)
 
 import os
