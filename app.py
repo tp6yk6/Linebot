@@ -34,13 +34,13 @@ def function(text):
         text='87'
     else:
         text=text:
-    return text
+    return TextSendMessage(text)
     
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=function(event.message.text))
+    message = function(event.message.text)
     line_bot_api.reply_message(event.reply_token, message)
 
 import os
