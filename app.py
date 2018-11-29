@@ -30,7 +30,7 @@ def callback():
         abort(400)
     return 'OK'
 def function(text):
-    if text=='hi':
+    if text=='hi' or 'Hi':
         text='hello'
     else:
         text='安安'
