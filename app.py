@@ -1,3 +1,4 @@
+import random
 from flask import Flask, request, abort
 
 from linebot import (
@@ -30,8 +31,11 @@ def callback():
         abort(400)
     return 'OK'
 def function(text):
+    list=['飯','麵','肉']
     if text=='hi' or text=='Hi':
         text='hello'
+    elif text=='餓':
+        text=random.choice(list)
     else:
         text='安安'
     return text
@@ -46,3 +50,4 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
+
