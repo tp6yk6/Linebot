@@ -34,6 +34,8 @@ def function(text):
     list=['飯','麵','肉']
     if text=='hi' or text=='Hi':
         text='hello'
+    elif text=='乃維':
+        text='黑人偷東西'
     elif text=='餓':
         text=random.choice(list)
     else:
