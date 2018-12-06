@@ -30,12 +30,15 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
+
+
+
 def keyword(text):
-    KeyWordDict = {"維":"你想找乃維還是出車禍的維"}
+    KeyWordDict = {"你好":"你也好啊"}
     for k in KeyWordDict.keys():
         if text.find(k)!=-1:
             return[True,KeyWordDict[k]]
-    return[false]
+    return[False]
 def Reply(event):
     Ktemp = KeyWord(event.message.text)
     if Ktemp[0]:
