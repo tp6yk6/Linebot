@@ -1,4 +1,3 @@
-import random
 from flask import Flask, request, abort
 
 from linebot import (
@@ -32,7 +31,7 @@ def callback():
     return 'OK'
 
 def Reply(event):
-    line_bot_api.reply_message(event.reply_token,
+    return line_bot_api.reply_message(event.reply_token,
         TemplateSendMessage(
             alt_text='替代文字',
             template=ButtonsTemplate(
@@ -41,9 +40,9 @@ def Reply(event):
                 text='內容',
                 actions=[
                     PostbackTemplateAction(
-                        label='按鈕文字',
-                        text='發話文字',
-                        data='夾帶資料'
+                    label='按鈕文字',
+                    text='發話文字',
+                    data='夾帶資料'
                     ),
                     MessageTemplateAction(
                         label='按鈕文字',
