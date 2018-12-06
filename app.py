@@ -31,7 +31,7 @@ def callback():
         abort(400)
     return 'OK'
 def keyword(text):
-    KeyWordDict = {}
+    KeyWordDict = {"維":"你想找乃維還是出車禍的維"}
     for k in KeyWordDict.keys():
         if text.find(k)!=-1:
             return[True,KeyWordDict[k]]
