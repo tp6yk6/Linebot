@@ -30,23 +30,27 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-def function(text):
-    list=['飯','麵','肉']
-    if text=='hi' or text=='Hi':
-        text='hello'
-    elif text=='乃維':
-        text='黑人偷東西'
-    elif text=='餓':
-        text=random.choice(list)
+def keyword(text):
+    KeyWordDict = {}
+    for k in KeyWordDict.keys():
+        if text.find(k)!=-1:
+            return[True,KeyWordDict[k]]
+    return[false]
+def Reply(event):
+    Ktemp = KeyWord(event.message.text)
+    if Ktemp[0]:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = Ktemp[1]))
+
     else:
-        text='安安'
-    return text
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(function(event.message.text))
-    line_bot_api.reply_message(event.reply_token, message)
+    try:
+        Reply(event)
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
 
 import os
 if __name__ == "__main__":
