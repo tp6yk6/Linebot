@@ -47,11 +47,42 @@ def Reply(event):
     else:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text = event.message.text))
 
+def Button(event):
+    message = TemplateSendMessage(
+    alt_text='Buttons template',
+    template=ButtonsTemplate(
+        thumbnail_image_url='https://example.com/image.jpg',
+        title='來算術吧',
+        text='1+1=?',
+        actions=[
+            PostbackTemplateAction(
+                label='4',
+                text='4',
+                data=''
+            ),
+            PostbackTemplateAction(
+                label='2',
+                text='2',
+                data=''
+            ),
+            PostbackTemplateAction(
+                label='3',
+                text='3',
+                data=''
+            )
+            
+        ]
+    )
+)
+line_bot_api.reply_message(event.reply_token, message)
+
+
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     try:
-        Reply(event)
+        Button(event)
+        #Reply(event)
     except Exception as e:
         line_bot_api.reply_message(event.reply_token,TextSendMessage(text=str(e)))
 
