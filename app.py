@@ -41,9 +41,9 @@ def Reply(event):
                 text='內容',
                 actions=[
                     PostbackTemplateAction(
-                    label='按鈕文字',
-                    text='發話文字',
-                    data='夾帶資料'
+                        label='按鈕文字',
+                        text='發話文字',
+                        data='夾帶資料'
                     ),
                     MessageTemplateAction(
                         label='按鈕文字',
