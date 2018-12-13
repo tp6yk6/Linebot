@@ -30,21 +30,64 @@ def callback():
     except InvalidSignatureError:
         abort(400)
     return 'OK'
-def function(text):
-    list=['飯','麵','肉']
-    if text=='hi' or text=='Hi':
-        text='hello'
-    elif text=='餓':
-        text=random.choice(list)
+#----------------要改的---------------------
+#關鍵字系統
+def KeyWord(event):
+    KeyWordDict = {"你好":"你也好啊",
+                   "你是誰":"我是大帥哥",
+                   "帥":"帥炸了",
+                   "差不多了":"讚!!!"}
+
+    for k in KeyWordDict.keys():
+        if event.message.text.find(k) != -1:
+            return [True,KeyWordDict[k]]
+    return [False]
+
+#按鈕版面系統
+def Button(event):
+    return TemplateSendMessage(
+        alt_text='特殊訊息，請進入手機查看',
+        template=ButtonsTemplate(
+            thumbnail_image_url='https://github.com/54bp6cl6/LineBotClass/blob/master/logo.jpg?raw=true',
+            title='HPClub - Line Bot 教學',
+            text='大家學會了ㄇ',
+            actions=[
+                PostbackTemplateAction(
+                    label='還沒',
+                    data='這裡留空就好，不要刪掉'
+                ),
+                MessageTemplateAction(
+                    label='差不多了',
+                    text='差不多了'
+                ),
+                URITemplateAction(
+                    label='幫我們按個讚',
+                    uri='https://www.facebook.com/ShuHPclub'
+                )
+            ]
+        )
+    )
+
+#回覆函式
+def Reply(event):
+    Ktemp = KeyWord(event)
+    if Ktemp[0]:
+        line_bot_api.reply_message(event.reply_token,
+            TextSendMessage(text = Ktemp[1]))
     else:
-        text='安安'
-    return text
+        line_bot_api.reply_message(event.reply_token,
+            Button(event))
 
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(function(event.message.text))
-    line_bot_api.reply_message(event.reply_token, message)
+    try:
+        Reply(event)
+    except Exception as e:
+        line_bot_api.reply_message(event.reply_token, 
+            TextSendMessage(text=str(e)))
+#-------------------
+
 
 import os
 if __name__ == "__main__":
